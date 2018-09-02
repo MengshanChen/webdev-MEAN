@@ -1,0 +1,57 @@
+<!--index.html call config.js-->
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+        <link href="css/style.css" rel="stylesheet"/>
+        <script src="js/jquery-1.11.2.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/angular.js"></script>
+        <script src="js/angular-route.js"></script>
+        <script src="app.js"></script>
+        <script src="config.js"></script>
+        <script src="views/home/home.controller.js"></script>
+        <script src="views/login/login.controller.js"></script>
+        <script src="views/register/register.controller.js"></script>
+        <script src="views/profile/profile.controller.js"></script>
+        <script src="views/nav/nav.controller.js"></script>
+        <script src="views/admin/admin.controller.js"></script>
+        <script src="views/item/item.controller.js"></script>
+        <script src="services/user.services.client.js"></script>
+        <script src="services/item.services.client.js"></script>
+    </head>
+    <body ng-app="ItemApp">
+        <div class="container">
+            <nav ng-controller="NavCtrl" class="navbar navbar-light nav-color">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                            <a class="navbar-brand" href="#home">Smart Items</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                            <div class="nav navbar-nav navbar-right credits">
+                                    <span ng-show="!currentUser">
+                                        <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a> 
+                                        &ensp;
+                                        <a href="#register"><span class="glyphicon glyphicon-user"></span> Register</a>
+                                    </span>
+                                    <span ng-show="currentUser">
+                                        <a href="#profile"><span class="glyphicon glyphicon-user"></span> Profile</a> 
+                                        &ensp;
+                                        <a href="#item"><span class="glyphicon glyphicon-equalizer"></span> Item</a> 
+                                        &ensp;
+                                        <span ng-show="currentUser.roles.indexOf('admin') != -1">
+                                        <a href="#admin"><span class="glyphicon glyphicon-grain"></span> Admin</a> 
+                                        &ensp;
+                                        </span>
+                                        <a href="#logout" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                                    </span>
+                            </div>
+                     </div>
+                </div>
+            </nav>
+            <div ng-view>
+            </div>
+        </div>
+    </body>
+</html>
