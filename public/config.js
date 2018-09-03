@@ -41,7 +41,7 @@
                   controllerAs: 'model'
               })
               .otherwise({
-                  redirectTo: '/home'
+                  redirectTo: '/login'
               });
         });
     
