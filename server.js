@@ -10,7 +10,7 @@ var mongoose      = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-var mongoDB = mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/itemsdb', {
+var mongoDB = mongoose.connect(process.env.MONGODB_URI || 'mongodb://admin:summer2018@ds141942.mlab.com:41942/smartitems', {
     useMongoClient: true
 });
 
