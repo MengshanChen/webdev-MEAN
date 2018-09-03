@@ -10,7 +10,7 @@ var mongoose      = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-var mongoDB = mongoose.connect('mongodb://localhost/itemsdb', {
+var mongoDB = mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/itemsdb', {
     useMongoClient: true
 });
 
@@ -40,4 +40,8 @@ app.use(express.static(__dirname + '/public'));
 
 require("./app/app.js")(app);
 
-app.listen(3000);
+//app.listen(3000);
+var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+  });
