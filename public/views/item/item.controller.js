@@ -35,8 +35,8 @@
         function add(item)
         {
             ItemService
-                .createItem(item)
-                .then(handleSuccess, handleError);
+            .createItem(item)
+            .then(handleSuccess, handleError);
         }
         
         function select(item)
