@@ -69,29 +69,13 @@ module.exports = function(app) {
         var newItem = req.body;
         // first check if a item already exists with the itemname
         itemModel
-            .findItemByItemname(newItem.itemname)
+            .createItem(newItem)
             .then(
                 function(item){
-                    // if the item does not already exist
-                    if(item == null) {
-                        // create a new item
-                        return itemModel.createItem(newItem)
-                            .then(
-                                // fetch all the items
-                                function(){
-                                    return itemModel.findAllItems();
-                                },
-                                function(err){
-                                    res.status(400).send("Fail to create a new item");
-                                }
-                            );
-                    // if the item already exists, then just fetch all the items
-                    } else {
-                        return itemModel.findAllItems();
-                    }
+                    return itemModel.findAllItems();
                 },
                 function(err){
-                    res.status(400).send("Item exists");
+                    res.status(400).send(err);
                 }
             )
             .then(
@@ -99,7 +83,7 @@ module.exports = function(app) {
                     res.json(items);
                 },
                 function(){
-                    res.status(400).send("Item exists");
+                    res.status(400).send(err);
                 }
             )
     };

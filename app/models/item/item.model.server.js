@@ -4,20 +4,27 @@ module.exports = function() {
 
     var ItemSchema = new mongoose.Schema(
         {
-            itemname: String,
+            itemname: {
+                type: String,
+                require: true
+            },
             category: String,
             brand: String,
-            from: {
-                type: Date,
-                default: Date.now
-            },
+            // from: {
+            //     type: Date,
+            //     default: Date.now
+            // },
             to: {
                 type: Date,
                 default: Date.now
             },
-            quantity: Number
-            //roles: [String]
+            quantity: {
+                type: Number,
+                min:0
+            }
         }, {collection: "item"});
+
+        
 
     var ItemModel = mongoose.model('ItemModel', ItemSchema);
 

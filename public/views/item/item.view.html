@@ -1,57 +1,56 @@
 <html>
-<body ng-app="myApp">
-
-	<div class="container">
-		<h1>Items</h1>
-
-		<table class="table table-text">
-			<col width="150">
-			<col width="120">
-			<col width="120">
-			<col width="180">
-			<col width="180">
-			<col width="100">
-			<col width="100">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Category</th>
-					<th>Brand</th>
-					<th>From(Default:Today)</th>
-                    <th>To</th>
-					<th>Quantity</th>
-					<th>Days Left</th>
+	<head>
+		<script>
+			var dt = new Date();
+			document.getElementById("datetime").innerHTML = (("0"+dt.getDate()).slice(-2)) +"/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (dt.getFullYear());
+		</script>
+	</head>
+	<body ng-app="ItemApp">
+		<div class="container">
+			<h1>Items</h1>
+			<td>Today: <span id="datetime"></span></td>
+			<table class="table table-text">
+				<col width="150">
+				<col width="150">
+				<col width="150">
+				<col width="150">
+				<col width="150">
+				<col width="150">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Category</th>
+						<th>Brand</th>
+						<th>Deadline</th>
+						<th>Quantity</th>
+						<th>Days Left</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Add Item -->
+					<tr>
+						<td><input type="text" class="form-control" itemname="itemname" ng-model="item.itemname"></td>
+						<td><input type="text" class="form-control" name="category" ng-model="item.category"></td>
+						<td><input type="text" class="form-control" name="brand" ng-model="item.brand"></td>
+						<td><input type="date" class="form-control" name="to" ng-model="item.to"></td>
+						<td><input type="number" class="form-control" name="quantity" ng-model="item.quantity"></td>
+						<td>&nbsp;</td>
+						<td><button ng-click="add(item)" class="btn btn-primary">&plus;</button>
+						<td><button ng-click="update(item)" class="btn btn-success">&check;</button>
+					</tr>
 				</tr>
-			</thead>
-			<tbody>
-				<!-- Add Item -->
-				<tr>
-					<td><input type="text" class="form-control" itemname="itemname" ng-model="item.itemname"></td>
-					<td><input type="text" class="form-control" name="category" ng-model="item.category"></td>
-					<td><input type="text" class="form-control" name="brand" ng-model="item.brand"></td>
-                    <td><input type="date" class="form-control" name="from" ng-model="item.from"></td>
-                    <td><input type="date" class="form-control" name="to" ng-model="item.to"></td>
-					<td><input type="number" class="form-control" name="quantity" ng-model="item.quantity"></td>
+				<tr ng-repeat="item in items">
+					<td>{{item.itemname}}</td>
+					<td>{{item.category}}</td>
+					<td>{{item.brand}}</td>
+					<td>{{item.to | date:'MM/dd/yyyy' }}</td>
+					<td>{{item.quantity}}</td>
 					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td><button ng-click="add(item)" class="btn btn-primary">&plus;</button>
-					<td><button ng-click="update(item)" class="btn btn-success">&check;</button>
+					<td><button ng-click="remove(item)" class="btn btn-danger">X</button>
+					<td><button ng-click="select(item)" class="btn btn-success">...</button>
 				</tr>
-			</tr>
-			<tr ng-repeat="item in items">
-				<td>{{item.itemname}}</td>
-				<td>{{item.category}}</td>
-				<td>{{item.brand}}</td>
-				<td>{{item.from | date:'MM/dd/yyyy'}}</td>
-				<td>{{item.to | date:'MM/dd/yyyy' }}</td>
-				<td>{{item.quantity}}</td>
-				<td>{{ ((item.to | date: "yyyy") - (item.from | date: "yyyy")) * 365 + ((item.to | date: "MM") - (item.from | date: "MM")) * 30 + ((item.to | date: "dd") - (item.from | date: "dd")) }}</td>
-				<td>&nbsp;</td>
-				<td><button ng-click="remove(item)" class="btn btn-danger">X</button>
-				<td><button ng-click="select(item)" class="btn btn-success">...</button>
-			</tr>
-			</tbody>
-		</table>
-	</div>
-</body>
+				</tbody>
+			</table>
+		</div>
+	</body>
 </html>

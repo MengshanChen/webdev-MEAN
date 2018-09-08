@@ -1,5 +1,7 @@
 var mongoose      = require("mongoose");
+//var Schema = mongoose.Schema;
 
+//var Item  = require('../item/item.model.server');
 module.exports = function() {
 
     var UserSchema = new mongoose.Schema(
@@ -11,7 +13,11 @@ module.exports = function() {
                 token: String
             },
             email: String,
-            roles: [String]
+            roles: [String],
+            // items: { 
+            //     type: Schema.Types.ObjectId, 
+            //     ref: Item
+            // }
         }, {collection: "user"});
 
     var UserModel = mongoose.model('UserModel', UserSchema);
