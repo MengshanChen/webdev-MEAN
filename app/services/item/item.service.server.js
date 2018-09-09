@@ -67,11 +67,11 @@ module.exports = function(app) {
 
     function createItem(req, res) {
         var newItem = req.body;
-        // first check if a item already exists with the itemname
+        
         itemModel
             .createItem(newItem)
             .then(
-                function(item){
+                function(item){      
                     return itemModel.findAllItems();
                 },
                 function(err){

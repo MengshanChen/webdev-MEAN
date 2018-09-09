@@ -10,6 +10,7 @@
         $scope.update = update;
         $scope.add    = add;
         $scope.select = select;
+        $scope.reset = reset;
 
         function init() {
             ItemService
@@ -44,12 +45,34 @@
             $scope.item = angular.copy(item);
         }
 
+        function reset()
+        {
+            $scope.item = angular.copy($scope.master);
+        }
+
         function handleSuccess(response) {
-            $scope.items = response.data;
+            var result = response.data;
+            result.forEach((item) => {
+                if(allDays(item) <= 0){
+                    item['dayDifference'] = "Expired";
+                }else{
+                    item['dayDifference'] = allDays(item);
+                }
+            })
+            $scope.items = result;
         }
 
         function handleError(error) {
             $scope.error = error;
+        }
+
+        function allDays(item)
+        {
+            var currentTime = new Date();
+            var expireTime = new Date(item.deadline);
+            var interval = expireTime.getTime() - currentTime.getTime();
+            var diff = Math.round(interval/24/60/60/1000);
+            return diff;
         }
     }
 })();

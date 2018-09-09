@@ -10,18 +10,19 @@ module.exports = function() {
             },
             category: String,
             brand: String,
-            // from: {
-            //     type: Date,
-            //     default: Date.now
-            // },
-            to: {
+            boughtAt: {
+                 type: Date,
+                 default: Date.now
+            },
+            deadline: {
                 type: Date,
                 default: Date.now
             },
             quantity: {
                 type: Number,
                 min:0
-            }
+            },
+            isExpire: Boolean
         }, {collection: "item"});
 
         
