@@ -1,7 +1,5 @@
 var mongoose      = require("mongoose");
-//var Schema = mongoose.Schema;
 
-//var Item  = require('../item/item.model.server');
 module.exports = function() {
 
     var UserSchema = new mongoose.Schema(
@@ -12,12 +10,24 @@ module.exports = function() {
                 id:    String,
                 token: String
             },
-            email: String,
+            email: {
+                type: String,
+                match: [
+                    /[\w]+?@[\w]+?\.[a-z]{2,4}/,
+                    'The value of path {PATH} ({VALUE}) is not a valid email address.'
+                ]
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now
+            },
             roles: [String],
-            // items: { 
-            //     type: Schema.Types.ObjectId, 
-            //     ref: Item
-            // }
+            items: [{
+                item: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'ItemModel'
+                }
+            }]
         }, {collection: "user"});
 
     var UserModel = mongoose.model('UserModel', UserSchema);

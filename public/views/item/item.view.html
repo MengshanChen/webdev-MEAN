@@ -6,55 +6,57 @@
 		</script>
 	</head>
 	<body ng-app="ItemApp">
-		<div class="container">
-			<h1>Items</h1>
-			<td>Today: <span id="datetime"></span></td>
-			<table class="table table-text">
-				<col width="150">
-				<col width="130">
-				<col width="130">
-				<col width="90">
-				<col width="90">
-				<col width="100">
-				<col width="100">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Category</th>
-						<th>Brand</th>
-						<th>Bought At</th>
-						<th>Deadline</th>
-						<th>Quantity</th>
-						<th>Days Left</th>
+		<span ng-show="currentUser">
+			<div class="container">
+				<h1>Items</h1>
+				<td>Today: <span id="datetime"></span></td>
+				<table class="table table-text">
+					<col width="150">
+					<col width="130">
+					<col width="130">
+					<col width="90">
+					<col width="90">
+					<col width="100">
+					<col width="100">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Category</th>
+							<th>Brand</th>
+							<th>Bought At</th>
+							<th>Deadline</th>
+							<th>Quantity</th>
+							<th>Days Left</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- Add Item -->
+						<tr>
+							<td><input type="text" class="form-control" itemname="itemname" ng-model="item.itemname"></td>
+							<td><input type="text" class="form-control" name="category" ng-model="item.category"></td>
+							<td><input type="text" class="form-control" name="brand" ng-model="item.brand"></td>
+							<td><input type="date" class="form-control" name="boughtAt" ng-model="item.boughtAt"></td>
+							<td><input type="date" class="form-control" name="deadline" ng-model="item.deadline"></td>
+							<td><input type="number" class="form-control" name="quantity" ng-model="item.quantity"></td>
+							<td><button ng-click="reset()" class="btn btn-primary">Reset</button>
+							<td><button ng-click="add(item)" class="btn btn-primary">&plus;</button>
+							<td><button ng-click="update(item)" class="btn btn-success">&check;</button>
+						</tr>
 					</tr>
-				</thead>
-				<tbody>
-					<!-- Add Item -->
-					<tr>
-						<td><input type="text" class="form-control" itemname="itemname" ng-model="item.itemname"></td>
-						<td><input type="text" class="form-control" name="category" ng-model="item.category"></td>
-						<td><input type="text" class="form-control" name="brand" ng-model="item.brand"></td>
-						<td><input type="date" class="form-control" name="boughtAt" ng-model="item.boughtAt"></td>
-						<td><input type="date" class="form-control" name="deadline" ng-model="item.deadline"></td>
-						<td><input type="number" class="form-control" name="quantity" ng-model="item.quantity"></td>
-						<td><button ng-click="reset()" class="btn btn-primary">Reset</button>
-						<td><button ng-click="add(item)" class="btn btn-primary">&plus;</button>
-						<td><button ng-click="update(item)" class="btn btn-success">&check;</button>
+					<tr ng-repeat="item in items  | orderBy:'-dayDifference'">
+						<td>{{item.itemname}}</td>
+						<td>{{item.category}}</td>
+						<td>{{item.brand}}</td>
+						<td>{{item.boughtAt | date:'MM/dd/yyyy' }}</td>
+						<td>{{item.deadline | date:'MM/dd/yyyy' }}</td>
+						<td>{{item.quantity}}</td>
+						<td>{{item.dayDifference}}</td>
+						<td><button ng-click="remove(item)" class="btn btn-danger">X</button>
+						<td><button ng-click="select(item)" class="btn btn-success">...</button>
 					</tr>
-				</tr>
-				<tr ng-repeat="item in items  | orderBy:'-dayDifference'">
-					<td>{{item.itemname}}</td>
-					<td>{{item.category}}</td>
-					<td>{{item.brand}}</td>
-					<td>{{item.boughtAt | date:'MM/dd/yyyy' }}</td>
-					<td>{{item.deadline | date:'MM/dd/yyyy' }}</td>
-					<td>{{item.quantity}}</td>
-					<td>{{item.dayDifference}}</td>
-					<td><button ng-click="remove(item)" class="btn btn-danger">X</button>
-					<td><button ng-click="select(item)" class="btn btn-success">...</button>
-				</tr>
-				</tbody>
-			</table>
-		</div>
+					</tbody>
+				</table>
+			</div>
+		</span>
 	</body>
 </html>

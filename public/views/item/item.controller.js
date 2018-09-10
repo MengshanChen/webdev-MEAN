@@ -52,9 +52,12 @@
 
         function handleSuccess(response) {
             var result = response.data;
+            //var total = 0;
             result.forEach((item) => {
                 if(allDays(item) <= 0){
                     item['dayDifference'] = "Expired";
+                    //item.isExpire = true;
+                    //total = total + 1;
                 }else{
                     item['dayDifference'] = allDays(item);
                 }

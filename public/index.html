@@ -22,39 +22,46 @@
         <script src="services/item.services.client.js"></script>
     </head>
     <body ng-app="ItemApp">
-        <div class="container">
-            <nav ng-controller="NavCtrl" class="navbar navbar-light nav-color">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                            <a class="navbar-brand" href="#login">Smart Items</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="myNavbar">
+            <div class="container">
+                <nav ng-controller="NavCtrl" class="navbar nav-color navbar-fixed-top">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                                <a class="navbar-brand" href="#login">Smart Items</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="myNavbar">
                             <div class="nav navbar-nav navbar-right credits">
-                                    <span ng-show="!currentUser">
-                                        <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a> 
-                                        &ensp;
-                                        <a href="#register"><span class="glyphicon glyphicon-user"></span> Register</a>
+                                <span ng-show="!currentUser">
+                                    <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a> 
+                                    &ensp;
+                                    <a href="#register"><span class="glyphicon glyphicon-user"></span> Register</a>
+                                    &ensp;
+                                    &ensp;
+                                </span>
+                                <span ng-show="currentUser">
+                                    <a href="#profile"><span class="glyphicon glyphicon-user"></span> Profile</a> 
+                                    &ensp;
+                                    <a href="#item"><span class="glyphicon glyphicon-equalizer"></span> Item</a> 
+                                    &ensp;
+                                    <span ng-show="currentUser.roles.indexOf('admin') != -1">
+                                    <a href="#admin"><span class="glyphicon glyphicon-grain"></span> Admin</a> 
+                                    &ensp;
                                     </span>
-                                    <span ng-show="currentUser">
-                                        <a href="#profile"><span class="glyphicon glyphicon-user"></span> Profile</a> 
-                                        &ensp;
-                                        <a href="#item"><span class="glyphicon glyphicon-equalizer"></span> Item</a> 
-                                        &ensp;
-                                        <span ng-show="currentUser.roles.indexOf('admin') != -1">
-                                        <a href="#admin"><span class="glyphicon glyphicon-grain"></span> Admin</a> 
-                                        &ensp;
-                                        </span>
-                                        <a href="#logout" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                                    </span>
+                                    <a href="#logout" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                                    &ensp;
+                                    &ensp;
+                                </span>
                             </div>
-                     </div>
-                </div>
-            </nav>
+                         </div>
+                    </div>
+                </nav>
+            </div>
+            <br />
+            <br />
+            <br />
             <div ng-view>
             </div>
-        </div>
-    </body>
-    <footer>
+        </body>
+    <footer class = "nav-color">
         <p>Copyright © Mengshan Chen</p>
     </footer>
 </html>

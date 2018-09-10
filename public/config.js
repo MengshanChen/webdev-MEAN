@@ -20,7 +20,7 @@
                 templateUrl: 'views/item/item.view.html',
                 controller: 'ItemCtrl',
                 resolve: {
-                    loggedin: checkLoggedin
+                    loggedin: checkCurrentUser
                 }
               })
               .when('/admin', {

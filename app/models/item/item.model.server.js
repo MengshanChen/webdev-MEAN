@@ -20,12 +20,10 @@ module.exports = function() {
             },
             quantity: {
                 type: Number,
-                min:0
+                min: [1, 'Quantity can not be less then 1.']
             },
             isExpire: Boolean
         }, {collection: "item"});
-
-        
 
     var ItemModel = mongoose.model('ItemModel', ItemSchema);
 
