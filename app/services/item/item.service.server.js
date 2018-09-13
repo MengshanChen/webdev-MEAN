@@ -67,7 +67,7 @@ module.exports = function(app) {
 
     function createItem(req, res) {
         var newItem = req.body;
-        
+
         itemModel
             .createItem(newItem)
             .then(

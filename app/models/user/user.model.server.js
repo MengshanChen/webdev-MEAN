@@ -4,7 +4,11 @@ module.exports = function() {
 
     var UserSchema = new mongoose.Schema(
         {
-            username: String,
+            username: {
+                type: String,
+                required: true, 
+                index: { unique: true}
+            },
             password: String,
             google:   {
                 id:    String,
@@ -17,18 +21,12 @@ module.exports = function() {
                     'The value of path {PATH} ({VALUE}) is not a valid email address.'
                 ]
             },
-            createdAt: {
-                type: Date,
-                default: Date.now
-            },
-            roles: [String],
-            items: [{
-                item: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'ItemModel'
-                }
-            }]
-        }, {collection: "user"});
+            roles: [String]
+        },
+        {
+          collection: 'user', // collection name
+          timestamps: true // create 'createdAt' and 'updatedAt' timestamps
+        });
 
     var UserModel = mongoose.model('UserModel', UserSchema);
 

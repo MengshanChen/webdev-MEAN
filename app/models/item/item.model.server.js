@@ -4,6 +4,7 @@ module.exports = function() {
 
     var ItemSchema = new mongoose.Schema(
         {
+            creator: { type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'},
             itemname: {
                 type: String,
                 require: true
@@ -21,9 +22,11 @@ module.exports = function() {
             quantity: {
                 type: Number,
                 min: [1, 'Quantity can not be less then 1.']
-            },
-            isExpire: Boolean
-        }, {collection: "item"});
+            }
+        }, {
+            collection: "item",
+            timestamps: true // create 'createdAt' and 'updatedAt' timestamps
+        });
 
     var ItemModel = mongoose.model('ItemModel', ItemSchema);
 
@@ -49,6 +52,7 @@ module.exports = function() {
     function findAllItems() {
         return ItemModel.find();
     }
+
     function createItem(item) {
         return ItemModel.create(item);
     }
