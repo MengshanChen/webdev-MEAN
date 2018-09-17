@@ -57,6 +57,11 @@
             ItemService
                 .deleteItem(item._id)
                 .then(handleSuccess, handleError);
+
+            ItemService
+                .findAllItemsForUser($scope.currentUser._id)
+                .then(handleSuccess, handleError);
+
         }
         
         function select(item)

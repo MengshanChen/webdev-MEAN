@@ -4,7 +4,7 @@ module.exports = function(app) {
 
     var itemModel = require("../../models/item/item.model.server.js")();
     app.get   ('/api/user/:userId/item',     findItemsByUserId);
-    app.get   ('/api/item/:itemId',     findItemById);
+    app.get   ('/api/item/:id',     findItemById);
     app.get   ('/api/item',     findAllItems);
     app.post  ('/api/user/:userId/item',     createItem);
     app.put   ('/api/item/:id', updateItem);
@@ -40,7 +40,7 @@ module.exports = function(app) {
 
     function findItemById(req,res){
         console.log("findItemById in item.service.server");
-        var itemId = req.params.itemId;
+        var itemId = req.params.id;
         itemModel
             .findItemById(itemId)
             .then(
@@ -55,17 +55,9 @@ module.exports = function(app) {
 
     function deleteItem(req, res) {
         console.log("deleteItem in item.service.server");
-        var userId = req.params.userId;
+        var itemId = req.params.id;
         itemModel
-            .removeItem(req.params.id)
-            .then(
-                function(item){
-                    return itemModel.findAllItems(userId);
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
+            .removeItem(itemId)
             .then(
                 function(items){
                     res.json(items);
@@ -79,15 +71,15 @@ module.exports = function(app) {
 
     function updateItem(req, res) {
         console.log("updateItem in item.service.server");
-        var userId = req.params.userId;
         var itemId = req.params.id;
         var newItem = req.body;
+        var userId = newItem.userId;
 
         itemModel
             .updateItem(itemId, newItem)
             .then(
                 function(item){
-                    return itemModel.findAllItems(userId);
+                    return itemModel.findItemsByUserId(userId);
                 },
                 function(err){
                     res.status(400).send(err);

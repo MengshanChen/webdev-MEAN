@@ -80,16 +80,7 @@ module.exports = function() {
 
     function findItemById(itemId) {
         console.log("findItemById in item.model.server");
-        var deferred = q.defer();
-        ItemModel.findById(itemId,function(err,doc){
-            if(err){
-                deferred.reject(err);
-            }else{
-                deferred.resolve(doc);
-            }
-        });
-
-        return deferred.promise;
+        return ItemModel.findById({_id:itemId});
     }
 
     function updateItem(itemId, item) {
@@ -130,11 +121,11 @@ module.exports = function() {
     function findItemsByUserId(userId) {
         console.log("findItemsByUserId in item.model.server");
         var deferred = q.defer();
-        ItemModel.find({userId: {$in:userId}}, function(err, doc){
+        ItemModel.find({userId: {$in:userId}}, function(err, item){
             if(err){
                 deferred.reject(err);
             }else{
-                deferred.resolve(doc);
+                deferred.resolve(item);
             }
         })
         return deferred.promise;
