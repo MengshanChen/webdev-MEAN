@@ -41,7 +41,7 @@ app.use(express.static(__dirname + '/public'));
 require("./app/app.js")(app);
 
 //app.listen(3000);
-var server = app.listen(process.env.PORT || 3000, function () {
+var server = app.listen(process.env.PORT || 4000, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });

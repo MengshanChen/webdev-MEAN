@@ -20,7 +20,7 @@
                 templateUrl: 'views/item/item.view.html',
                 controller: 'ItemCtrl',
                 resolve: {
-                    loggedin: checkCurrentUser
+                      loggedin: checkCurrentUser
                 }
               })
               .when('/admin', {
@@ -51,7 +51,7 @@
     
         $http.get('/api/loggedin').success(function(user)
         {
-            $rootScope.errorMessage = null;
+            $rootScope.errorMessage = "Admin need to log in";
             // User is Authenticated
             if (user !== '0' && user.roles.indexOf('admin') != -1)
             {
@@ -70,7 +70,7 @@
     
         $http.get('/api/loggedin').success(function(user)
         {
-            $rootScope.errorMessage = null;
+            $rootScope.errorMessage = "You need to log in";
             // User is Authenticated
             if (user !== '0')
             {

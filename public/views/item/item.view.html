@@ -9,7 +9,8 @@
 		<span ng-show="currentUser">
 			<div class="container">
 				<h1>Items</h1>
-				<td>Today: <span id="datetime"></span></td>
+				<h4>Today: <span id="datetime"></span></h4>
+				<h4 style = "color:red">You have <span class="grid-text">{{expired}}</span> items out of date!</h4>
 				<table class="table table-text">
 					<col width="150">
 					<col width="130">
@@ -35,15 +36,15 @@
 							<td><input type="text" class="form-control" itemname="itemname" ng-model="item.itemname"></td>
 							<td><input type="text" class="form-control" name="category" ng-model="item.category"></td>
 							<td><input type="text" class="form-control" name="brand" ng-model="item.brand"></td>
-							<td><input type="date" class="form-control" name="boughtAt" ng-model="item.boughtAt"></td>
-							<td><input type="date" class="form-control" name="deadline" ng-model="item.deadline"></td>
+							<td><input type="date" class="form-control" name="boughtAt" string-to-date ng-model="item.boughtAt" ng-change="customOPHchangeExpDateValid(item.boughtAt, $parent.$parent.$index)"></td>
+							<td><input type="date" class="form-control" name="deadline" string-to-date ng-model="item.deadline" ng-change="customOPHchangeExpDateValid(item.deadline, $parent.$parent.$index)"></td>
 							<td><input type="number" class="form-control" name="quantity" ng-model="item.quantity"></td>
 							<td><button ng-click="reset()" class="btn btn-primary">Reset</button>
 							<td><button ng-click="add(item)" class="btn btn-primary">&plus;</button>
 							<td><button ng-click="update(item)" class="btn btn-success">&check;</button>
 						</tr>
 					</tr>
-					<tr ng-repeat="item in items  | orderBy:'-dayDifference'">
+					<tr ng-repeat="item in items  | orderBy:'-dayDifference'" ng-class="{'success' : $index == selectedFormIndex}">
 						<td>{{item.itemname}}</td>
 						<td>{{item.category}}</td>
 						<td>{{item.brand}}</td>

@@ -1,10 +1,11 @@
 var mongoose      = require("mongoose");
+var q = require("q");
 
 module.exports = function() {
 
     var ItemSchema = new mongoose.Schema(
         {
-            creator: { type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'},
+            userId: String,
             itemname: {
                 type: String,
                 require: true
@@ -37,27 +38,88 @@ module.exports = function() {
         createItem: createItem,
         removeItem: removeItem,
         updateItem: updateItem,
-        getMongooseModel: getMongooseModel
+        getMongooseModel: getMongooseModel,
+        findItemsByUserId: findItemsByUserId
     };
     return api;
 
-    function updateItem(itemId, item) {
-        return ItemModel.update({_id: itemId}, {$set: item});
-    }
-
-    function removeItem(itemId) {
-        return ItemModel.remove({_id: itemId});
+    function createItem(userId,item) {
+        console.log("createItem in item.model.server");
+        var item = new ItemModel({
+            userId:userId,
+            itemname: item.itemname,
+            category: item.category,
+            brand: item.brand,
+            boughtAt: item.boughtAt,
+            deadline: item.deadline,
+            quantity: item.quantity
+        });
+        var deferred = q.defer();
+        item.save(function (err,doc) {
+            if(err) {
+                deferred.reject(err)
+            }else{
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
     }
 
     function findAllItems() {
-        return ItemModel.find();
+        console.log("findAllItems in item.model.server");
+        var deferred = q.defer();
+        ItemModel.find(function(err,doc){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
     }
 
-    function createItem(item) {
-        return ItemModel.create(item);
+    function findItemById(itemId) {
+        console.log("findItemById in item.model.server");
+        var deferred = q.defer();
+        ItemModel.findById(itemId,function(err,doc){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function updateItem(itemId, item) {
+        console.log("updateItem in item.model.server");
+        var deferred = q.defer();
+        ItemModel.findById(itemId,function(err,doc){
+            doc.itemname = item.itemname,
+            doc.category = item.category,
+            doc.brand = item.brand,
+            doc.boughtAt = item.boughtAt,
+            doc.deadline = item.deadline,
+            doc.quantity = item.quantity
+            doc.save(function(err,doc){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(doc);
+                }
+            })
+        });
+        return deferred.promise;
+    }
+
+    function removeItem(itemId) {
+        console.log("removeItem in item.model.server");
+        return ItemModel.remove({_id: itemId});
     }
 
     function findItemByItemname(itemname) {
+        console.log("findItemByItemname in item.model.server");
         return ItemModel.findOne({itemname: itemname});
     }
 
@@ -65,7 +127,16 @@ module.exports = function() {
         return ItemModel;
     }
 
-    function findItemById(itemId) {
-        return ItemModel.findById(itemId);
+    function findItemsByUserId(userId) {
+        console.log("findItemsByUserId in item.model.server");
+        var deferred = q.defer();
+        ItemModel.find({userId: {$in:userId}}, function(err, doc){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(doc);
+            }
+        })
+        return deferred.promise;
     }
 }

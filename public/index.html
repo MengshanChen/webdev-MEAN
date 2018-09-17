@@ -40,7 +40,7 @@
                                 <span ng-show="currentUser">
                                     <a href="#profile"><span class="glyphicon glyphicon-user"></span> Profile</a> 
                                     &ensp;
-                                    <a href="#item"><span class="glyphicon glyphicon-equalizer"></span> Item</a> 
+                                    <a href="#/item" ng-class = "{'active' : $location.url() == '/items'}"><span class="glyphicon glyphicon-equalizer"></span> Item</a> 
                                     &ensp;
                                     <span ng-show="currentUser.roles.indexOf('admin') != -1">
                                     <a href="#admin"><span class="glyphicon glyphicon-grain"></span> Admin</a> 

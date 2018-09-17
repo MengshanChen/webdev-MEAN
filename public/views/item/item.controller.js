@@ -2,7 +2,20 @@
 {
     angular
         .module("ItemApp")
-        .controller('ItemCtrl', ItemCtrl);
+        .controller('ItemCtrl', ItemCtrl)
+        .directive('stringToDate',function(){
+            return {
+                require: 'ngModel',
+                link: function(scope, element, attrs, ngModel) {
+                  ngModel.$parsers.push(function(value) {
+                    return '' + value;
+                  });
+                  ngModel.$formatters.push(function(value) {
+                    return new Date(value);
+                  });
+                }
+              };
+        });
     
     function ItemCtrl($scope, ItemService)
     {
@@ -11,38 +24,54 @@
         $scope.add    = add;
         $scope.select = select;
         $scope.reset = reset;
+        $scope.expired = 0;
+        
 
         function init() {
+            console.log("item form");
             ItemService
-                .findAllItems()
+                .findAllItemsForUser($scope.currentUser._id)
                 .then(handleSuccess, handleError);
         }
         init();
 
-        function remove(item)
+        function add(item)
         {
+            console.log("create item in item.controller")
             ItemService
-                .deleteItem(item._id)
+                .createItemForUser($scope.currentUser._id,item)
                 .then(handleSuccess, handleError);
         }
         
         function update(item)
         {
+            console.log("update item in item.controller")
             ItemService
                 .updateItem(item._id, item)
                 .then(handleSuccess, handleError);
         }
 
-        function add(item)
+        function remove(item)
         {
+            console.log("delete item in item.controller")
             ItemService
-            .createItem(item)
-            .then(handleSuccess, handleError);
+                .deleteItem(item._id)
+                .then(handleSuccess, handleError);
         }
         
         function select(item)
         {
-            $scope.item = angular.copy(item);
+            $scope.item = {
+                _id: item._id,
+                userId: item.userId,
+                itemname: item.itemname,
+                category: item.category,
+                brand: item.brand,
+                boughtAt: item.boughtAt,
+                deadline: item.deadline,
+                quantity: item.quantity
+            };
+            //$scope.item = angular.copy(item);
         }
 
         function reset()
@@ -51,17 +80,17 @@
         }
 
         function handleSuccess(response) {
+            console.log("calculate date in item.controller")
             var result = response.data;
-            //var total = 0;
-            result.forEach((item) => {
-                if(allDays(item) <= 0){
-                    item['dayDifference'] = "Expired";
-                    //item.isExpire = true;
-                    //total = total + 1;
+            $scope.expired = 0;
+            for (var i = 0; i < result.length; i++){
+                if(allDays(result[i]) <= 0){
+                    result[i]['dayDifference'] = "Expired";
+                    $scope.expired++;
                 }else{
-                    item['dayDifference'] = allDays(item);
+                    result[i]['dayDifference'] = allDays(result[i]);
                 }
-            })
+            }
             $scope.items = result;
         }
 

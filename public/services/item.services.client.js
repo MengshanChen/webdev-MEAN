@@ -6,15 +6,19 @@
 
     function ItemService($http) {
         var api = {
-            findAllItems: findAllItems,
+            findAllItemsForUser: findAllItemsForUser,
             deleteItem: deleteItem,
             updateItem: updateItem,
-            createItem: createItem
+            createItemForUser: createItemForUser
         };
         return api;
 
-        function createItem(item) {
-            return $http.post('/api/item', item);
+        function createItemForUser(userId,item) {
+            return $http.post("/api/user/" + userId + "/item",item);
+        }
+
+        function findAllItemsForUser(userId) {
+            return $http.get("/api/user/" + userId +"/item");
         }
 
         function updateItem(itemId, item) {
@@ -23,10 +27,6 @@
 
         function deleteItem(itemId) {
             return $http.delete('/api/item/'+itemId);
-        }
-
-        function findAllItems() {
-            return $http.get("/api/item");
         }
     }
 })();
