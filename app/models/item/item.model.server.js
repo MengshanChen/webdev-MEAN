@@ -23,7 +23,12 @@ module.exports = function() {
             quantity: {
                 type: Number,
                 min: [1, 'Quantity can not be less then 1.']
-            }
+            },
+            boughtOrNot: {
+                type: Boolean,
+                default: true
+            },
+            expireOrNot: Boolean
         }, {
             collection: "item",
             timestamps: true // create 'createdAt' and 'updatedAt' timestamps

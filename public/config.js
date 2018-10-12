@@ -20,7 +20,7 @@
                 templateUrl: 'views/item/item.view.html',
                 controller: 'ItemCtrl',
                 resolve: {
-                      loggedin: checkCurrentUser
+                      loggedin: checkLoggedin
                 }
               })
               .when('/admin', {
@@ -39,6 +39,13 @@
                   templateUrl: 'views/register/register.view.html',
                   controller: 'RegisterCtrl',
                   controllerAs: 'model'
+              })
+              .when('/cart', {
+                templateUrl: 'views/cart/cart.view.html',
+                controller: 'cartCtrl',
+                resolve: {
+                      loggedin: checkLoggedin
+                }
               })
               .otherwise({
                   redirectTo: '/login'

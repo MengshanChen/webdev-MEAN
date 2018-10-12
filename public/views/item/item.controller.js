@@ -92,6 +92,7 @@
                 if(allDays(result[i]) <= 0){
                     result[i]['dayDifference'] = "Expired";
                     $scope.expired++;
+                    result[i].expireOrNot = true;
                 }else{
                     result[i]['dayDifference'] = allDays(result[i]);
                 }
