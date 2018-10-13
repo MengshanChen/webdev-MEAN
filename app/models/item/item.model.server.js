@@ -24,10 +24,6 @@ module.exports = function() {
                 type: Number,
                 min: [1, 'Quantity can not be less then 1.']
             },
-            boughtOrNot: {
-                type: Boolean,
-                default: true
-            },
             expireOrNot: Boolean
         }, {
             collection: "item",

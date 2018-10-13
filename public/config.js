@@ -40,9 +40,9 @@
                   controller: 'RegisterCtrl',
                   controllerAs: 'model'
               })
-              .when('/cart', {
-                templateUrl: 'views/cart/cart.view.html',
-                controller: 'cartCtrl',
+              .when('/product', {
+                templateUrl: 'views/product/product.view.html',
+                controller: 'ProductCtrl',
                 resolve: {
                       loggedin: checkLoggedin
                 }

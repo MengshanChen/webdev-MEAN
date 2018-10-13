@@ -13,6 +13,7 @@ mongoose.Promise = global.Promise;
 var mongoDB = mongoose.connect(process.env.MONGODB_URI || 'mongodb://admin:summer2018@ds141942.mlab.com:41942/smartitems', {
     useMongoClient: true
 });
+//var mongoDB = mongoose.connect('mongodb://localhost/test');
 
 mongoDB
     .then(function (db) {

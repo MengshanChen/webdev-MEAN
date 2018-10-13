@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<script>
+			// Initialize and add the map
+			function initMap() {
+				// The location of Uluru
+				var uluru = {lat: -25.344, lng: 131.036};
+				// The map, centered at Uluru
+				var map = new google.maps.Map(
+					document.getElementById('map'), {zoom: 4, center: uluru});
+				// The marker, positioned at Uluru
+				var marker = new google.maps.Marker({position: uluru, map: map});
+			}
+		</script>
+	</head>
+	<body ng-app="ItemApp">
+		<span ng-show="currentUser">
+			<div class="container">  
+                    <table class="table table-text table2">
+                            <col width="150">
+                            <col width="150">
+                            <col width="150">
+                            <col width="150">
+                            <thead>
+                                <tr>
+                                    <th class = "table-text">Product Name</th>
+                                    <th class = "table-text">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="form-control" name="productname" ng-model="product.productname"></td>
+                                    <td><input type="number" class="form-control" name="quantity" ng-model="product.quantity"></td>
+                                    <td><button ng-click="add(product)" class="addBtn">Add</button>
+                                </tr>
+                                </tr>
+                                <tr ng-repeat="product in products" class = "tablestyle">
+                                    <td>{{product.productname}}</td>
+                                    <td>{{product.quantity}}</td>
+                                    <td class="special"><button ng-click="remove(product)" class="addBtn">Delete</button>
+                                </tr>
+                            </tbody>
+                        </table>
+            </div>
+		</span>
+
+		<div id="map"></div>
+		<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5Vf8wjYB60wXtg86RIgm-GlT-ALFK2Ak&callback=initMap">
+		</script>
+	</body>
+</html>
