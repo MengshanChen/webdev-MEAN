@@ -14,5 +14,5 @@ API:
 - Google Gmail
 
 Test Account: 
-Name: test
-password: 123
+- Name: test
+- password: 123
