@@ -13,3 +13,6 @@ API:
 - Google map 
 - Google Gmail
 
+Test Account: 
+Name: test
+password: 123
